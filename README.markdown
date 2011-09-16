@@ -16,7 +16,7 @@ your web.xml as follows:
 
 Configuring your Controller
 --------
-The plugin doesn't change any default beheavor of VRaptor. You can add it to a legacy code and 
+The plugin doesn't change any default behavior of VRaptor. You can add it to a legacy code and 
 start to use templates without break any working view.
 To configure the controller all you need to do is annotate the controller with @Layout
 
@@ -38,17 +38,41 @@ where you want the local view will be displayed.
 Example:
 
 <code>
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-    <html>
-    <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Simple Template Plugin</title>
-    </head>
     <body>
       Always before the local view
 	    <jsp:include page="${renderBody}" />
 	    Always after the local view
     </body>
-    </html>
 </code>
+
+Customizing the layout file name
+--------
+As you see above, the plugin will search for a file with the name of the controller or the application if
+the specific file doesn't exist, but if you want, you may change the layout name using the value property
+in the annotation:
+<code>    
+    @Layout("custom_layout")
+    @Resource
+    public class PersonController {
+      //your actions here
+    }
+</code>
+Now, the file searched will be WEB-INF/jsp/layouts/custom_layout.jsp
+
+
+More configuration
+--------
+Because the plugin doesn't change the the default workingflow of the VRaptor you would have to annotate ALL
+controller with @Layout. To simplify you configuration you may create a package-info.java and annotate the
+package with @Layout and then, every controller in this package will be affected.
+<code>    
+	@Layout
+	package app.controllers;
+
+	import br.com.caelum.vraptor.plugin.simpletemplate.Layout;
+</code>
+If both, package AND class have the annotation, the class you override the configuration.
+
+Full example
+--------
+You can see a project example here: http://github.com/davidpaniz/simple-template-plugin-example
