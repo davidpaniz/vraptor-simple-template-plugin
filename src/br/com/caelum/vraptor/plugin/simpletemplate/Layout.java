@@ -1,4 +1,4 @@
-package br.com.caelum.vraptor.plugin.simpletemplate.annotation;
+package br.com.caelum.vraptor.plugin.simpletemplate;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

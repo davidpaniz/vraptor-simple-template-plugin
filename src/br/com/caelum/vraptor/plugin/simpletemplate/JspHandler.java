@@ -1,4 +1,4 @@
-package br.com.caelum.vraptor.plugin.simpletemplate.components;
+package br.com.caelum.vraptor.plugin.simpletemplate;
 
 import java.io.File;
 import java.util.HashMap;

@@ -1,11 +1,9 @@
-package br.com.caelum.vraptor.plugin.simpletemplate.interceptor;
+package br.com.caelum.vraptor.plugin.simpletemplate;
 
 import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.core.InterceptorStack;
 import br.com.caelum.vraptor.interceptor.Interceptor;
-import br.com.caelum.vraptor.plugin.simpletemplate.annotation.Layout;
-import br.com.caelum.vraptor.plugin.simpletemplate.components.LayoutHandler;
 import br.com.caelum.vraptor.resource.ResourceMethod;
 
 
