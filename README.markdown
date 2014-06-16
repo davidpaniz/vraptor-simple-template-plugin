@@ -1,4 +1,4 @@
-VRaptor 4 Simple Template Plugin
+VRaptor Layout
 =========
 Suporte para VRaptor 4 implementado.
 
