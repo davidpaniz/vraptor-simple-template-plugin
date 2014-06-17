@@ -1,11 +1,12 @@
-package br.com.caelum.vraptor.plugin.simpletemplate;
+package br.com.caelum.vraptor.vraptor_layout;
 
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Specializes;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import br.com.caelum.vraptor.controller.ControllerMethod;
 import br.com.caelum.vraptor.http.FormatResolver;
-import br.com.caelum.vraptor.ioc.Component;
-import br.com.caelum.vraptor.ioc.RequestScoped;
-import br.com.caelum.vraptor.resource.ResourceMethod;
 import br.com.caelum.vraptor.view.DefaultPathResolver;
 
 /**
@@ -15,26 +16,33 @@ import br.com.caelum.vraptor.view.DefaultPathResolver;
  * @author David Paniz
  * @author Erich Egert
  */
+
+@Specializes
 @RequestScoped
-@Component
 public class TemplatePathResolver extends DefaultPathResolver {
 
 	
-	private final LayoutHandler handler;
+	@Inject
+	private LayoutHandler handler;
+	
+	@Inject
 	private HttpServletRequest request;
-	private final JspHandler jspHandler;
-
-	public TemplatePathResolver(FormatResolver resolver, LayoutHandler handler,
-			HttpServletRequest request, JspHandler jspHandler) {
-		super(resolver);
-		this.handler = handler;
-		this.request = request;
-		this.jspHandler = jspHandler;
+	
+	@Inject
+	private JspHandler jspHandler;
+	
+	@Inject
+	private FormatResolver resolver;
+	
+	public TemplatePathResolver() {
+	
 	}
 
 	@Override
-	public String pathFor(ResourceMethod method) {
-		String originalPath = super.pathFor(method);
+	public String pathFor(ControllerMethod method) {
+		DefaultPathResolver defaultPathResolver = new DefaultPathResolver(resolver);
+		String originalPath = defaultPathResolver.pathFor(method);	
+		
 		if (!handler.isUsingLayout()) {
 			return originalPath;
 		}
@@ -48,19 +56,18 @@ public class TemplatePathResolver extends DefaultPathResolver {
 		if (!jspHandler.exists(layoutFileName)) {
 			layoutFileName = getLayoutFileName("application");
 		}
-
+	
 		return layoutFileName;
 	}
 
 	private String getLayoutFileName(String layoutName) {
-		return super.getPrefix() + "layouts/" + layoutName + "."
-				+ super.getExtension();
+		return super.getPrefix() + "layouts/" + layoutName + "." + super.getExtension();
 	}
 
-	private String extractLayoutName(ResourceMethod method) {
+	private String extractLayoutName(ControllerMethod method) {
 		String layoutName = handler.getLayoutName();
-		if (layoutName.isEmpty()) {
-			layoutName = extractControllerFromName(method.getResource()
+		if (layoutName.isEmpty()) { //se o nome não for especificado ele usa o nome do controller
+			layoutName = extractControllerFromName(method.getController()
 					.getType().getSimpleName());
 		}
 

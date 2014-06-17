@@ -1,12 +1,14 @@
-package br.com.caelum.vraptor.plugin.simpletemplate;
+package br.com.caelum.vraptor.vraptor_layout;
 
-import br.com.caelum.vraptor.ioc.Component;
-import br.com.caelum.vraptor.ioc.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 
-@Component
 @RequestScoped
 public class LayoutHandler {
 	private String layoutName;
+	
+	public LayoutHandler() {
+		
+	}
 
 	public String getLayoutName() {
 		return layoutName;
